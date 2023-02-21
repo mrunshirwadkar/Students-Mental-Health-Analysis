@@ -1,0 +1,72 @@
+-- 	Check total number of records in the table
+select 
+	count(*) as total_records
+from survey;
+
+-- Count the number of International and Domestic students
+select 
+	inter_dom,
+	count(inter_dom) as count_inter_dom
+from survey
+group by inter_dom;
+
+-- Show relevant data about international students
+
+select 
+	japanese_cate,
+    english_cate,
+    academic,
+    age,
+    stay,
+    todep,
+    tosc,
+    toas
+from survey
+where inter_dom = 'inter';
+
+-- Show relevant data about domestic students
+
+select 
+	japanese_cate,
+    english_cate,
+    academic,
+    age,
+    stay,
+    todep,
+    tosc,
+    toas
+from survey
+where inter_dom = 'Dom';
+
+-- Summary statistics for Internation students
+
+select
+	inter_dom,
+	max(todep) as maximum_PHQ,
+    min(todep) as minimum_PHQ,
+    avg(todep) as average_PHQ,
+    max(tosc) as maximum_social,
+    min(todep) as minimum_social,
+    avg(todep) as average_social,
+    max(todep) as maximum_stress,
+    min(todep) as minimum_stress,
+    avg(todep) as average_stress
+from survey
+group by inter_dom;
+
+-- How does length of stay of international student impacts the diagnostic tests.
+
+select
+	stay, 
+	ROUND(AVG(todep), 2) AS average_PHQ, 
+	ROUND(AVG(tosc), 2) AS average_social, 
+	ROUND(AVG(toas), 2) AS average_stress
+from survey
+where inter_dom = 'Inter'
+group by stay
+order by stay DESC;
+
+    
+    
+
+
